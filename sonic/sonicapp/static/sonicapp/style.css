@@ -1,7 +1,7 @@
 #chatbot{
     margin-left: auto;
     margin-right: auto;
-    width: 70%;
+    width: 50%;
     margin-top: 50px;
     border-radius: 10px;
     border: 1px solid gray;
@@ -20,7 +20,7 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
-    width: 70%;
+    width: 55%;
     text-align: center;
 }
 
@@ -29,7 +29,7 @@
     border-bottom: 3px solid #848080;
     font-family: monospace;
     font-size: 14px;
-    width: 60%;
+    width: 50%;
     padding: 16px;
     color: darkorange;
 }
