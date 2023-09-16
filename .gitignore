@@ -163,3 +163,4 @@ sonic/.env
 .idea/workspace.xml
 .pyc
 /sonic/__pycache__/
+migrations/
