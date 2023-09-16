@@ -7,10 +7,7 @@ def index(request):
     return render(request, "sonicapp/index.html")
 
 
-def specific(request):
-    return HttpResponse("The specific URL")
-
-
 def getResponse(request):
-    userMessage = request.GET.get("userMessage")
+    userMessage = request.GET.get("userMessage")  # User message received from chat
+
     return HttpResponse(userMessage)
