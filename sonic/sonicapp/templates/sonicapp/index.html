@@ -18,7 +18,7 @@
             var userHTML = "<p class='userText'>You: <span>"+userText+"</span></p>";
             $('#textInput').val("");
             $('#chatbot').append(userHTML);
-            $.get('/sonicapp/getResponse', {userMessage:userText}).done(function(data){
+            $.get('/getResponse', {userMessage:userText}).done(function(data){
                 var returnedMessage = '<p class="botText">Sonic: <span>'+ data +'</span></p>';
                 $('#chatbot').append(returnedMessage);
             })

@@ -1,4 +1,4 @@
-#chatbot{
+#chatbot {
     margin-left: auto;
     margin-right: auto;
     width: 50%;
@@ -8,7 +8,7 @@
     padding: 10px;
 }
 
-.botText{
+.botText {
     font-family: monospace;
     font-size: 14px;
     text-align: left;
@@ -16,7 +16,7 @@
     color: rgb(109, 111, 109);
 }
 
-#userInput{
+#userInput {
     margin-left: auto;
     margin-right: auto;
     margin-top: 40px;
@@ -24,7 +24,7 @@
     text-align: center;
 }
 
-#textInput{
+#textInput {
     border: 3px solid white;
     border-bottom: 3px solid #848080;
     font-family: monospace;
@@ -34,7 +34,7 @@
     color: darkorange;
 }
 
-#buttonInput{
+#buttonInput {
     padding: 5px;
     font-family: monospace;
     font-size: 14px;
@@ -44,16 +44,59 @@
     border-radius: 10px;
 }
 
-h1{
+h1 {
     text-align: center;
     color: rgb(57, 72, 57);
     font-family: monospace;
 }
 
-.userText{
+.userText {
     text-align: right;
     font-family: monospace;
     font-size: 14px;
     line-height: 25px;
     color: rgb(109, 111, 109);
 }
+
+.form_container {
+    box-sizing: border-box;
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 15%;
+    height: 300px;
+    border: 5px solid #f44336;
+    background-color: #ffeb3b;
+}
+
+.form_wrapper form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.form_wrapper form input {
+    margin: 20px auto;
+    width: 400px;
+    text-align: center;
+    border-radius: 10px;
+    padding-left: 5px;
+    height: 25px;
+}
+
+.form_wrapper form input button {
+    background-color: #f44336;
+}
+
+.form_wrapper form button {
+	margin: 10px auto;
+	display: block;
+	background-color: greenyellow;
+    color: black;
+    border:none;
+	border: 0.2rem solid black;
+	border-radius: 30px;
+	cursor: pointer;
+	height: 40px;
+	width: 30%;
+	padding:  auto;
+} 
