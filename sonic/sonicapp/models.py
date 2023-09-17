@@ -3,9 +3,10 @@ from django.db import models
 
 # Create your models here.
 class PDFile(models.Model):
-    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
-    text = models.TextField()
+    file = models.FileField(upload_to="uploads/")
+    text = models.TextField(default="")
 
 
 class Question(models.Model):
