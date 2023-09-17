@@ -1,0 +1,20 @@
+{% extends 'sonicapp/base.html' %}
+
+{% block index %}
+
+    <div class="container">
+        <div class="wrapper">
+            <div class="upl_form">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for f in form %}
+                    {{ f.label }} {{ f }}
+                    {% endfor %}
+                    {{f.errors}}
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
