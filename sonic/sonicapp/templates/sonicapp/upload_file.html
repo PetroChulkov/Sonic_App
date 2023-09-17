@@ -7,7 +7,7 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 {% for f in form %}
-                {{ f.label }} {{ f }}
+                {{ f }}
                 {% endfor %}
                 {{f.errors}}
                 <button type="submit">Upload</button>
