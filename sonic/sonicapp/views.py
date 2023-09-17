@@ -10,7 +10,6 @@ def index(request):
 
 def getResponse(request):
     userMessage = request.GET.get("userMessage")  # User message received from chat
-
     return HttpResponse(userMessage)
 
 
