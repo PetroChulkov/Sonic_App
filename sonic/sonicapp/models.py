@@ -8,6 +8,9 @@ class PDFile(models.Model):
     file = models.FileField(upload_to="uploads/")
     text = models.TextField(default="")
 
+    def __str__(self) -> str:
+        return self.title
+
 
 class Question(models.Model):
     question = models.CharField(max_length=500)
@@ -15,8 +18,9 @@ class Question(models.Model):
         PDFile, related_name="question", on_delete=models.CASCADE
     )
 
+
 class FilesUpload(models.Model):
-    admin_upload = models.FileField(upload_to="media")
+    admin_upload = models.FileField(upload_to="uploads/")
     title = models.CharField(max_length=50)
 
     def __str__(self):
