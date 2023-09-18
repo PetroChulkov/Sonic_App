@@ -41,7 +41,7 @@ def upload_file(request):
 
 
 def text_extractor(file):
-    loader = PyPDFLoader(file)
+    loader = PyPDFLoader(str(file))
     data = loader.load()
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
     docs = text_splitter.split_documents(data)
