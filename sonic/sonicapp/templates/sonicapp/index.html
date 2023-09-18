@@ -8,6 +8,11 @@
         </div>
         <div id="userInput">
             <input type="text" id="textInput" name="userMessage" placeholder="Type your message..."/>
+            <select id="pdf-select" name="size">
+                {% for f in pdf_files %}
+                <option value="{{ f }}">{{ f }}</option>
+                {% endfor %}
+            </select>
             <input type="submit" value="Send" id="buttonInput"/>
         </div>
     </div>
@@ -15,10 +20,12 @@
     <script>
         function getUserResponse(){
             var userText = $('#textInput').val();
+            var select = document.getElementById("pdf-select");
+            var userSelect = select.value;
             var userHTML = "<p class='userText'>You: <span>"+userText+"</span></p>";
             $('#textInput').val("");
             $('#chatbot').append(userHTML);
-            $.get('/getResponse', {userMessage:userText}).done(function(data){
+            $.get('/getResponse', {userMessage:userText, userSelect:userSelect}).done(function(data){
                 var returnedMessage = '<p class="botText">Sonic: <span>'+ data +'</span></p>';
                 $('#chatbot').append(returnedMessage);
             })
