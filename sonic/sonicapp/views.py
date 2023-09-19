@@ -1,10 +1,16 @@
-from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from .forms import PDFileForm
-from .models import PDFile
 import os
+
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy
+from django.contrib.auth import logout, login
+from django.http import HttpResponse, HttpResponseRedirect
+from django.views.generic import CreateView
+from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
 from langchain.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+
+from .forms import PDFileForm, RegisterUserForm, LoginUserForm
+from .models import PDFile
 from sonic.settings import BASE_DIR
 from .models import PDFile
 
@@ -47,3 +53,14 @@ def text_extractor(file):
     docs = text_splitter.split_documents(data)
     text = [t.page_content for t in docs]
     return text
+
+
+class RegisterUser(CreateView):
+    form_class = RegisterUserForm
+    template_name = "sonicapp/register.html"
+    success_url = reverse_lazy("sonicapp:index")
+
+    def form_valid(self, form):
+        user = form.save()
+        login(self.request, user)
+        return redirect("/")
