@@ -1,8 +1,9 @@
 {% extends 'sonicapp/base.html' %}
 
-{% block index %}
+{% block content %}
 <h1>Sonic ChatBot</h1>
     <div>
+        {% if request.user.is_authenticated %}
         <div id="chatbot">
             <p class="botText"><span>Hi there!</span></p>
         </div>
@@ -15,6 +16,11 @@
             </select>
             <input type="submit" value="Send" id="buttonInput"/>
         </div>
+        {% else %}
+        <div>
+            <h3>Sign in to use the bot</h3>
+        </div>
+        {% endif %}
     </div>
 
     <script>

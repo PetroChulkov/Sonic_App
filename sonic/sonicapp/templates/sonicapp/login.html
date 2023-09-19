@@ -1,0 +1,30 @@
+{% extends 'sonicapp/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="detail-wrapper">
+        <div class="log">
+            <form method="POST" class="log-in-cl">
+                {% csrf_token %}
+                <div class="form-error">{{ form.non_field_errors }}</div>
+                <div class="form-login">
+                    {% for f in form %}
+                        {{f.label}}:
+                        {{ f }}
+                    <div class="form-error">{{ f.errors }}</div>
+                    {% endfor %}
+                </div>
+                <div class="login-button">
+                    <button type="submit" class="sub-but-login">Log in</button>
+                    <input type="hidden" name="next" value="{% url 'index' %}">
+                </div>
+                <div class="forg-pass">
+                    <a href="{% url 'password_reset' %}" class="text-center">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

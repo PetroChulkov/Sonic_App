@@ -9,10 +9,22 @@
         <title>Document</title>
 </head>
 <body>
+    <div class="nav">
+        <ul class="menu">
+            <li><a href="{% url 'index' %}">Bot Page</a></li>            </ul>
+        <ul class="sign-in">
+            {% if request.user.is_authenticated %}
+            <li>{{ user.username.upper }}</li>
+            <li><a href="{% url 'upload_file' %}">Upload file</a></li>
+            <li><a href="{% url 'logout' %}">Log out</a></li>
+            {% else %}
+            <li><a href="{% url 'register' %}">Registration</a></li>
+            <li><a href="{% url 'login' %}">Log in</a></li>
+            {% endif %}
+        </ul>
+    </div>
 
-   {% block index %}{% endblock %} 
-   
-   {% block upload_file %}{% endblock %} 
+    {% block content %}{% endblock %} 
 
 </body>
 </html>
