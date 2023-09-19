@@ -64,3 +64,8 @@ class RegisterUser(CreateView):
         user = form.save()
         login(self.request, user)
         return redirect("/")
+
+
+class LoginUser(LoginView):
+    form_class = LoginUserForm
+    template_name = "sonicapp/login.html"
