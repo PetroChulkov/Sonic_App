@@ -1,6 +1,6 @@
 {% extends 'sonicapp/base.html' %}
 
-{% block login %}
+{% block content %}
 
 <div class="container">
     <div class="detail-wrapper">
@@ -19,9 +19,9 @@
                     <button type="submit" class="sub-but-login">Log in</button>
                     <input type="hidden" name="next" value="{% url 'index' %}">
                 </div>
-                {#<div class="forg-pass">#}
-                    {#<a href="{% url 'password_reset' %}" class="text-center">Forgot Password?</a>#}
-                {#</div>#}
+                <div class="forg-pass">
+                    <a href="{% url 'password_reset' %}" class="text-center">Forgot Password?</a>
+                </div>
             </form>
         </div>
     </div>
