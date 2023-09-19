@@ -1,18 +1,6 @@
 from django import forms
 from .models import PDFile
 
-
-class PDFileForm(forms.ModelForm):
-    class Meta:
-        model = PDFile
-        exclude = ["created_at", "text"]
-        widgets = {
-            "title": forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "File's Title"}
-            ),
-        }
-
-
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
@@ -24,6 +12,17 @@ from django.forms import (
     TextInput,
     PasswordInput,
 )
+
+
+class PDFileForm(forms.ModelForm):
+    class Meta:
+        model = PDFile
+        exclude = ["created_at", "text"]
+        widgets = {
+            "title": forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "File's Title"}
+            ),
+        }
 
 
 class RegisterUserForm(UserCreationForm):
