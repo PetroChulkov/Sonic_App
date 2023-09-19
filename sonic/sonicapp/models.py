@@ -17,11 +17,3 @@ class Question(models.Model):
     pdf_file = models.ForeignKey(
         PDFile, related_name="question", on_delete=models.CASCADE
     )
-
-
-class FilesUpload(models.Model):
-    admin_upload = models.FileField(upload_to="uploads/")
-    title = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.title

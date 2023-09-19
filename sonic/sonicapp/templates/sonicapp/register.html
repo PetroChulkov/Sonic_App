@@ -1,0 +1,18 @@
+{% extends 'sonicapp/base.html' %}
+
+{% block content %}
+
+<div class="reg-container">
+    <div class="reg-wrapper">
+        <form method="POST" class="reg-inputs" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for f in form %}
+            <label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}
+            <div class="form-error">{{ f.errors }}</div>
+            {% endfor %}
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
