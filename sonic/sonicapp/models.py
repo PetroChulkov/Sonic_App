@@ -6,7 +6,7 @@ class PDFile(models.Model):
     title = models.CharField(max_length=100)
     created_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to="uploads/")
-    text = models.TextField(default="")
+    # text = models.TextField(default="")
 
     def __str__(self) -> str:
         return self.title

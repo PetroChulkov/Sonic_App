@@ -7,19 +7,14 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView
 from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from langchain.document_loaders import PyPDFLoader
-
-from langchain.text_splitter import CharacterTextSplitter
-
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-
+from dotenv import load_dotenv
 from .forms import PDFileForm, RegisterUserForm, LoginUserForm
 from .models import PDFile
+from .model_exp import chat_response
 
-from sonic.settings import BASE_DIR
-from .models import PDFile
-from .model_exp import text_extractor, get_vectorstore, get_conversation_chain
 
+
+load_dotenv()
 # Create your views here.
 def index(request):
     pdf_files = [file.title for file in PDFile.objects.all()]
@@ -31,8 +26,9 @@ def getResponse(request):
     userSelect = request.GET.get("userSelect")  # User message received from chat
     print(request.GET)
     docs = PDFile.objects.get(title=userSelect)
-    vectorscore = get_vectorstore(docs.text)
-    response = get_conversation_chain(vectorscore, userMessage)
+    query = userMessage
+    doc = docs.file
+    response = chat_response(doc, query, userSelect)
     return HttpResponse(response)
 
 
@@ -41,12 +37,6 @@ def upload_file(request):
         form = PDFileForm(request.POST, request.FILES)
         if form.is_valid():
             file = form.save()
-            text = text_extractor(
-                os.path.join(
-                    BASE_DIR, "media", "uploads", form.cleaned_data["file"].name
-                )
-            )
-            file.text = text
             file.save()
             return HttpResponseRedirect("upload_file")
     else:
