@@ -1,30 +1,31 @@
 import os
 
+from dotenv import load_dotenv
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.contrib.auth import logout, login
 from django.http import HttpResponse, HttpResponseRedirect
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
-from dotenv import load_dotenv
+
 from .forms import PDFileForm, RegisterUserForm, LoginUserForm
 from .models import PDFile
 from .model_exp import chat_response
 
 
-
 load_dotenv()
-# Create your views here.
+
+
 def index(request):
     pdf_files = [file.title for file in PDFile.objects.all()]
     return render(request, "sonicapp/index.html", {"pdf_files": pdf_files})
 
 
 def getResponse(request):
-    userMessage = request.GET.get("userMessage")  # User message received from chat
-    userSelect = request.GET.get("userSelect")  # User message received from chat
-    print(request.GET)
+    userMessage = request.GET.get("userMessage")
+    userSelect = request.GET.get("userSelect")
     docs = PDFile.objects.get(title=userSelect)
     query = userMessage
     doc = docs.file
@@ -35,7 +36,9 @@ def getResponse(request):
 
 def upload_file(request):
     if request.method == "POST":
-        form = PDFileForm(request.POST, request.FILES)
+        form = PDFileForm(request.POST, request.FILES, request.user.id)
+        user = User.objects.filter(id=request.user.id).first()
+        form.instance.user = user
         if form.is_valid():
             file = form.save()
             file.save()
@@ -43,9 +46,6 @@ def upload_file(request):
     else:
         form = PDFileForm()
     return render(request, "sonicapp/upload_file.html", {"form": form})
-
-
-
 
 
 class RegisterUser(CreateView):
@@ -78,3 +78,12 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
     )
     subject_template_name = "sonicapp/password_reset_subject.txt"
 
+
+class PDFileListView(ListView):
+    model = PDFile
+    template_name = "sonicapp/pdfile_list.html"
+
+
+class PDFileDetailView(DetailView):
+    model = PDFile
+    template_name = "sonicapp/pdfile_detail.html"

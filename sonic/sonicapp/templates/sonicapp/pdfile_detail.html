@@ -1,0 +1,13 @@
+{% extends 'sonicapp/base.html' %}
+
+{% block content %}
+
+    <h1>The story of your requests to the book "{{ object.title }}"</h1>
+    
+    {% for q in object.question.all %}
+    <ul>
+        <li>{{ q.question }}</li>
+    </ul>
+    {% endfor %}
+
+{% endblock %}
