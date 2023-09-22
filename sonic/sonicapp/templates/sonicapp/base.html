@@ -16,6 +16,7 @@
             {% if request.user.is_authenticated %}
             <li>{{ user.username.upper }}</li>
             <li><a href="{% url 'upload_file' %}">Upload file</a></li>
+            <li><a href="{% url 'pdfile_list' %}">Your files</a></li>
             <li><a href="{% url 'logout' %}">Log out</a></li>
             {% else %}
             <li><a href="{% url 'register' %}">Registration</a></li>
