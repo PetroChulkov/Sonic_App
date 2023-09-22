@@ -6,13 +6,13 @@ from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import FAISS
 from langchain.chains import ConversationalRetrievalChain
 from sonic.settings import BASE_DIR
-
+from .models import Question
 import os
 
 load_dotenv()
 
 
-def chat_response(file, query, choice):
+def chat_response(file, query, id):
     loader = PyPDFLoader(os.path.join(
                     BASE_DIR, "media", str(file)
                 ))
@@ -37,4 +37,6 @@ def chat_response(file, query, choice):
     chat_history = []
     result = qa_chain({'question': query, 'chat_history': chat_history})
     print(result['answer'])
+    question = Question(question=query, pdf_file_id=id)
+    question.save()
     return result['answer']

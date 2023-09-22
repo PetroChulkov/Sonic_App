@@ -28,7 +28,8 @@ def getResponse(request):
     docs = PDFile.objects.get(title=userSelect)
     query = userMessage
     doc = docs.file
-    response = chat_response(doc, query, userSelect)
+    id = docs.id
+    response = chat_response(doc, query, id)
     return HttpResponse(response)
 
 
