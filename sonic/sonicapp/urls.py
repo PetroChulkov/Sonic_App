@@ -13,6 +13,7 @@ urlpatterns = [
     path("getResponse", views.getResponse, name="getResponse"),
     path("upload_file", views.upload_file, name="upload_file"),
     path("<int:pk>", views.PDFileDetailView.as_view(), name="pdfile_detail"),
+    path("pdf_file/delete/<int:id>/", views.delete_pdfile, name="pdfile_delete"),
     path("myfiles", views.PDFileListView.as_view(), name="pdfile_list"),
     path("register/", views.RegisterUser.as_view(), name="register"),
     path("login/", views.LoginUser.as_view(), name="login"),

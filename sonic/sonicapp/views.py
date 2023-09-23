@@ -2,7 +2,8 @@ import os
 
 from dotenv import load_dotenv
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import logout, login
 from django.http import HttpResponse, HttpResponseRedirect
@@ -60,6 +61,18 @@ def upload_file(request):
     else:
         form = PDFileForm()
     return render(request, "sonicapp/upload_file.html", {"form": form})
+
+
+def delete_pdfile(request, id):
+    pdfile = get_object_or_404(PDFile, pk=id)
+    context = {"pdfile": pdfile}
+
+    if request.method == "GET":
+        return render(request, "sonicapp/post_confirm_delete.html", context)
+    elif request.method == "POST":
+        pdfile.delete()
+        messages.success(request, "The post has been deleted successfully.")
+        return redirect("pdfile_list")
 
 
 class RegisterUser(CreateView):

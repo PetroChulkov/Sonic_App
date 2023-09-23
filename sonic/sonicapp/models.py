@@ -17,6 +17,14 @@ class PDFile(models.Model):
     def get_absolute_url(self):
         return reverse("pdfile_detail", args=[str(self.id)])
 
+    def delete(self, *args, **kwargs):
+        # You have to prepare what you need before delete the model
+        storage, path = self.file.storage, self.file.path
+        # Delete the model before the file
+        super(PDFile, self).delete(*args, **kwargs)
+        # Delete the file after the model
+        storage.delete(path)
+
 
 class Question(models.Model):
     question = models.CharField(max_length=500)
