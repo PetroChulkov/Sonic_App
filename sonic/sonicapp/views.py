@@ -80,8 +80,10 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 
 class PDFileListView(ListView):
-    model = PDFile
     template_name = "sonicapp/pdfile_list.html"
+
+    def get_queryset(self):
+        return PDFile.objects.filter(user=self.request.user).all()
 
 
 class PDFileDetailView(DetailView):

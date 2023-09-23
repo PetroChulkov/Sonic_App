@@ -3,9 +3,20 @@
 
 {% block content %}
 
+{% if not request.user.is_authenticated %}
 <section class="bg-white">
     <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-        {% if object_list %} 
+        <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
+            <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">You Are Not Logged In</h2>
+            <p class="font-light text-black sm:text-xl dark:text-black">Sign In To See Your Files</p>
+        </div>
+    </div>
+</section>
+
+{% else %}
+<section class="bg-white">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
+        {% if object_list %}
         <div class="mx-auto max-w-screen-sm text-center lg:mb-16 mb-8">
             <h2 class="mb-4 text-3xl lg:text-4xl tracking-tight font-extrabold text-gray-900">Your PDF Files</h2>
             <p class="font-light text-black sm:text-xl dark:text-black">Click the file to see the history of your requests</p>
@@ -20,10 +31,11 @@
                     </span>
                     <span class="text-sm text-white">{{ file.created_at|date:"d F Y H:i" }}</span>
                 </div>
-                <h2 class="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="{{ file.get_absolute_url }}">{{ file.title }}</a></h2>
-                <p class="mb-5 font-light text-gray-500 dark:text-gray-400">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus quod blanditiis ad quasi culpa commodi ut corporis sit unde ullam.</p>
+                <!-- <h2 class="mb-5 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"><a href="{{ file.get_absolute_url }}">{{ file.title }}</a></h2> -->
+                <h2 class="px-2 py-2 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md text-2xl font-bold"><a href="{{ file.get_absolute_url }}">{{ file.title }}</a></h2>
+                <p class="mb-5 px-2 font-light text-gray-500 dark:text-gray-400">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Doloribus quod blanditiis ad quasi culpa commodi ut corporis sit unde ullam.</p>
                 <div class="flex justify-between items-center">
-                    <div class="flex items-center space-x-4">
+                    <div class="px-2 flex items-center space-x-4">
                         <img class="w-7 h-7 rounded-full" src="{% static 'sonicapp/img/user-white.svg' %}" alt="User White Avatar" />
                         <span class="font-medium dark:text-white">
                             {{ user.username.capitalize }}
@@ -45,4 +57,5 @@
         {% endif %}  
     </div>
 </section>
+{% endif %}
 {% endblock %}
