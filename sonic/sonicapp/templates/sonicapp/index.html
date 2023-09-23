@@ -26,6 +26,7 @@
     </div> -->
 
 <!-- <div class="flex h-screen flex-col bg-gray-100"> -->
+{% if request.user.is_authenticated %}
 <div class="sm:w-full md:w-full lg:w-2/5 xl:w-2/5 mx-auto mt-5 mb-2 bg-gray-800 py-4 border-4 rounded-lg border-gray-800">
     <h1 class="text-center text-2xl font-bold text-white">Sonic ChatBot</h1>
 </div>
@@ -52,25 +53,32 @@
     <input type="submit" value="Send" class="ml-2 rounded-lg border-2 border-white bg-blue-900 hover:bg-blue-950 px-4 py-2 text-white" id="buttonInput"/>
 </div>
 
-    <script>
-        function getUserResponse(){
-            var userText = $('#textInput').val();
-            var select = document.getElementById("pdf-select");
-            var userSelect = select.value;
-            var userHTML = "<div class='flex flex-col space-y-2 p-4 overflow-y-auto'><div class='flex items-center self-end rounded-xl border-4 border-black rounded-tr bg-blue-500 py-2 px-3 text-white overflow-y-auto'><p class='userText'>You: "+userText+"</p></div></div>";
-            // var userHTML = "<div class='userText'>You: <span>"+userText+"</span></p>";
-            $('#textInput').val("");
-            $('#chatbot').append(userHTML);
-            $.get('/getResponse', {userMessage:userText, userSelect:userSelect}).done(function(data){
-                var returnedMessage = "<div class='flex flex-col space-y-2 p-4 overflow-y-auto'><div class='flex items-center self-start rounded-xl rounded-tl border-4 border-black bg-blue-500 py-2 px-3 overflow-y-auto'><p class='botText text-white'>Sonic: "+ data +"</p></div></div>";
-                // var returnedMessage = '<div class="botText">Sonic: <span>'+ data +'</span></p>';
-                $('#chatbot').append(returnedMessage);
-            })
-        }
-
-        $('#buttonInput').click(function(){
-            getUserResponse();
+<script>
+    function getUserResponse(){
+        var userText = $('#textInput').val();
+        var select = document.getElementById("pdf-select");
+        var userSelect = select.value;
+        var userHTML = "<div class='flex flex-col space-y-2 p-4 overflow-y-auto'><div class='flex items-center self-end rounded-xl border-4 border-black rounded-tr bg-blue-500 py-2 px-3 text-white overflow-y-auto'><p class='userText'>You: "+userText+"</p></div></div>";
+        // var userHTML = "<div class='userText'>You: <span>"+userText+"</span></p>";
+        $('#textInput').val("");
+        $('#chatbot').append(userHTML);
+        $.get('/getResponse', {userMessage:userText, userSelect:userSelect}).done(function(data){
+            var returnedMessage = "<div class='flex flex-col space-y-2 p-4 overflow-y-auto'><div class='flex items-center self-start rounded-xl rounded-tl border-4 border-black bg-blue-500 py-2 px-3 overflow-y-auto'><p class='botText text-white'>Sonic: "+ data +"</p></div></div>";
+            // var returnedMessage = '<div class="botText">Sonic: <span>'+ data +'</span></p>';
+            $('#chatbot').append(returnedMessage);
         })
+    }
 
-    </script>
+    $('#buttonInput').click(function(){
+        getUserResponse();
+    })
+
+</script>
+{% else %}
+<div class="bg-gray-800 min-h-screen">
+    <div class="sm:w-full md:w-full lg:w-2/5 xl:w-2/5 mx-auto pt-20">
+        <h1 class="mx-auto w-3/5 h-11 mb-10 text-3xl text-center font-semibold text-gray-900 dark:text-white rounded-md bg-gray-700">Sign in to use the bot</h1>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

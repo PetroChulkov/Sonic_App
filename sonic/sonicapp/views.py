@@ -30,6 +30,9 @@ load_dotenv()
 
 
 def index(request):
+    anon = request.user.is_anonymous
+    if anon:
+        return render(request, "sonicapp/index.html")
     pdf_files = [file.title for file in PDFile.objects.filter(user=request.user).all()]
     return render(request, "sonicapp/index.html", {"pdf_files": pdf_files})
 
