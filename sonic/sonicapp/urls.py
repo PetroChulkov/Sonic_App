@@ -27,7 +27,7 @@ urlpatterns = [
     ),
     path(
         "reset-password/confirm/<uidb64>/<token>/",
-        PasswordResetConfirmView.as_view(
+        views.ConfirmPasswordResetView.as_view(
             template_name="sonicapp/password_reset_confirm.html",
             success_url="/reset-password/complete/",
         ),

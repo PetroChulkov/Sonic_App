@@ -7,10 +7,21 @@ from django.urls import reverse_lazy
 from django.contrib.auth import logout, login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView, DetailView, ListView
-from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
+from django.contrib.auth.views import (
+    LoginView,
+    PasswordResetView,
+    LogoutView,
+    PasswordResetConfirmView,
+)
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .forms import PDFileForm, RegisterUserForm, LoginUserForm, ResetPasswordForm
+from .forms import (
+    PDFileForm,
+    RegisterUserForm,
+    LoginUserForm,
+    ResetPasswordForm,
+    ConfirmPasswordForm,
+)
 from .models import PDFile
 from .model_exp import chat_response
 
@@ -90,3 +101,7 @@ class PDFileListView(ListView):
 class PDFileDetailView(DetailView):
     model = PDFile
     template_name = "sonicapp/pdfile_detail.html"
+
+
+class ConfirmPasswordResetView(PasswordResetConfirmView):
+    form_class = ConfirmPasswordForm
