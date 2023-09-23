@@ -19,7 +19,7 @@ load_dotenv()
 
 
 def index(request):
-    pdf_files = [file.title for file in PDFile.objects.all()]
+    pdf_files = [file.title for file in PDFile.objects.filter(user=request.user).all()]
     return render(request, "sonicapp/index.html", {"pdf_files": pdf_files})
 
 
