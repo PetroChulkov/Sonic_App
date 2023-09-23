@@ -1,13 +1,19 @@
 {% extends 'sonicapp/base.html' %}
 
 {% block content %}
-
-    <h1>The story of your requests to the book "{{ object.title }}"</h1>
-    
-    {% for q in object.question.all %}
-    <ul>
-        <li>{{ q.question }}</li>
-    </ul>
-    {% endfor %}
-
+<div class="min-h-screen bg-gray-800">
+    <div class="sm:w-full md:w-full lg:w-2/5 xl:w-2/5 mx-auto pt-20">
+        {% if object.question.all %}
+            <h1 class="mb-10 text-2xl text-center font-semibold text-gray-900 dark:text-white">The story of your requests to the book "{{ object.title }}"</h1>
+            
+            {% for q in object.question.all %}
+            <ul class="space-y-1 text-white list-disc list-inside dark:text-white">
+                <li>"{{ q.question }} - "{{ q.created_at|date:"d F Y H:i" }}"</li>
+            </ul>
+            {% endfor %}
+        {% else %}
+            <h1 class="mb-10 text-2xl text-center font-semibold text-gray-900 dark:text-white">No questions to "{{ object.title }}" yet.</h1>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

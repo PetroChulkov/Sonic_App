@@ -10,7 +10,7 @@ from django.views.generic import CreateView, DetailView, ListView
 from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .forms import PDFileForm, RegisterUserForm, LoginUserForm
+from .forms import PDFileForm, RegisterUserForm, LoginUserForm, ResetPasswordForm
 from .models import PDFile
 from .model_exp import chat_response
 
@@ -65,10 +65,11 @@ class LoginUser(LoginView):
 
 
 class LogOutUser(LogoutView):
-    next_page = "/"
+    next_page = "login"
 
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    form_class = ResetPasswordForm
     template_name = "sonicapp/password_reset.html"
     email_template_name = "sonicapp/password_reset_email.html"
     html_email_template_name = "sonicapp/password_reset_email.html"

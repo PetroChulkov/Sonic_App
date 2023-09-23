@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.conf import settings
 from django.db import models
 from django.urls import reverse
@@ -21,3 +23,4 @@ class Question(models.Model):
     pdf_file = models.ForeignKey(
         PDFile, related_name="question", on_delete=models.CASCADE
     )
+    created_at = models.DateTimeField(auto_now_add=True)
