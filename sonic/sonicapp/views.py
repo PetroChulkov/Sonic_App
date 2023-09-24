@@ -2,15 +2,27 @@ import os
 
 from dotenv import load_dotenv
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.contrib.auth import logout, login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic import CreateView, DetailView, ListView
-from django.contrib.auth.views import LoginView, PasswordResetView, LogoutView
+from django.contrib.auth.views import (
+    LoginView,
+    PasswordResetView,
+    LogoutView,
+    PasswordResetConfirmView,
+)
 from django.contrib.messages.views import SuccessMessageMixin
 
-from .forms import PDFileForm, RegisterUserForm, LoginUserForm
+from .forms import (
+    PDFileForm,
+    RegisterUserForm,
+    LoginUserForm,
+    ResetPasswordForm,
+    ConfirmPasswordForm,
+)
 from .models import PDFile
 from .model_exp import chat_response
 
@@ -19,7 +31,10 @@ load_dotenv()
 
 
 def index(request):
-    pdf_files = [file.title for file in PDFile.objects.all()]
+    anon = request.user.is_anonymous
+    if anon:
+        return render(request, "sonicapp/index.html")
+    pdf_files = [file.title for file in PDFile.objects.filter(user=request.user).all()]
     return render(request, "sonicapp/index.html", {"pdf_files": pdf_files})
 
 
@@ -48,6 +63,18 @@ def upload_file(request):
     return render(request, "sonicapp/upload_file.html", {"form": form})
 
 
+def delete_pdfile(request, id):
+    pdfile = get_object_or_404(PDFile, pk=id)
+    context = {"pdfile": pdfile}
+
+    if request.method == "GET":
+        return render(request, "sonicapp/post_confirm_delete.html", context)
+    elif request.method == "POST":
+        pdfile.delete()
+        messages.success(request, "The post has been deleted successfully.")
+        return redirect("pdfile_list")
+
+
 class RegisterUser(CreateView):
     form_class = RegisterUserForm
     template_name = "sonicapp/register.html"
@@ -65,10 +92,11 @@ class LoginUser(LoginView):
 
 
 class LogOutUser(LogoutView):
-    next_page = "/"
+    next_page = "login"
 
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
+    form_class = ResetPasswordForm
     template_name = "sonicapp/password_reset.html"
     email_template_name = "sonicapp/password_reset_email.html"
     html_email_template_name = "sonicapp/password_reset_email.html"
@@ -80,10 +108,16 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 
 class PDFileListView(ListView):
-    model = PDFile
     template_name = "sonicapp/pdfile_list.html"
+
+    def get_queryset(self):
+        return PDFile.objects.filter(user=self.request.user).all()
 
 
 class PDFileDetailView(DetailView):
     model = PDFile
     template_name = "sonicapp/pdfile_detail.html"
+
+
+class ConfirmPasswordResetView(PasswordResetConfirmView):
+    form_class = ConfirmPasswordForm
