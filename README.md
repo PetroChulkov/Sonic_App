@@ -18,7 +18,7 @@
 
 ## How To Install
 
-1. Clone this repository to your local machine
+1. Clone this repository to your local machine, open with GutHub Desktop or download ZIP and unpack it
 2. Set virtual environment
 3. Run app from the app folder ``` python manage.py runserver ```
 

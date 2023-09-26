@@ -163,4 +163,5 @@ sonic/.env
 .idea/workspace.xml
 .pyc
 /sonic/__pycache__/
-migrations/
+# migrations/
+create_docker_container.txt
