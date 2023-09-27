@@ -7,7 +7,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
-django = "^4.2.5"
 django-environ = "^0.11.2"
 psycopg2-binary = "^2.9.7"
 python-dotenv = "^1.0.0"
@@ -16,10 +15,10 @@ tiktoken = "^0.5.1"
 faiss-cpu = "^1.7.4"
 chromadb = "^0.4.10"
 transformers = "^4.33.2"
-torch = "^2.0.1"
 streamlit = "^1.26.0"
 instructorembedding = "^1.0.1"
 weaviate-client = "^3.24.1"
+django = "4.1.7"
 
 
 [build-system]
